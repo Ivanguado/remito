@@ -993,6 +993,10 @@ function mostrarResumenVentas() {
     }
 }
 
+
+
+/////////////////////// LUCI /////////////////////////////////////////////
+
 // Función para cargar datos directamente desde JSON
 async function cargarDatosDirectos() {
     
