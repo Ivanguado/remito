@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicación de Remitos</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Overlay para cerrar menú -->
+        <div id="menu-overlay" class="menu-overlay" onclick="toggleMenu()"></div>
+        
+        <header>
+            <div class="header-content">
+                <div class="menu-hamburguesa">
+                    <button class="hamburger-btn" onclick="toggleMenu()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <div id="menu-lateral" class="menu-lateral">
+                        <div class="menu-header">
+                            <h3>Menú</h3>
+                            <button class="close-menu" onclick="toggleMenu()">&times;</button>
+                        </div>
+                        <div class="menu-items">
+                            <a href="#" onclick="mostrarSeccion('clientes')" class="menu-item">
+                                👥 Gestión de Clientes
+                            </a>
+                            <a href="#" onclick="mostrarSeccion('productos')" class="menu-item">
+                                📦 Gestión de Productos
+                            </a>
+                            <a href="#" onclick="mostrarSeccion('principal')" class="menu-item">
+                                🧾 Remitos
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-title">
+                    <h1>🧾 Sistema de Remitos</h1>
+                    <p>Generación de remitos de venta - Aplicación Local</p>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Formulario de Encabezado -->
+            <section class="header-form">
+                <h2>Datos del Cliente</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="cliente">Cliente:</label>
+                        <input type="text" id="cliente" placeholder="Buscar cliente..." autocomplete="off" oninput="buscarClientes(this.value)" onfocus="buscarClientes(this.value)" onblur="setTimeout(() => ocultarSugerencias('cliente-suggestions'), 200)">
+                        <div id="cliente-suggestions" class="suggestions"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="domicilio">Domicilio:</label>
+                        <input type="text" id="domicilio" placeholder="Dirección (opcional)" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="localidad">Localidad:</label>
+                        <input type="text" id="localidad" placeholder="Ciudad" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha">Fecha:</label>
+                        <input type="date" id="fecha">
+                    </div>
+                    <div class="form-group">
+                        <label for="numero-remito">Número de Remito:</label>
+                        <input type="text" id="numero-remito" placeholder="Ej: REM-001" required>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Detalle de Productos -->
+            <section class="products-section">
+                <div class="section-header">
+                    <h2>Detalle de Productos</h2>
+                    <button type="button" class="btn btn-primary" onclick="agregarLinea()">
+                        ➕ Agregar Línea
+                    </button>
+                </div>
+                
+                <div class="table-container">
+                    <table id="productos-table">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Cantidad (Unidades)</th>
+                                <th>Info de Bulto</th>
+                                <th>Precio por Unidad</th>
+                                <th>Total</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productos-tbody">
+                            <!-- Las líneas se agregarán dinámicamente -->
+                        </tbody>
+                        <tfoot>
+                            <tr class="total-row">
+                                <td colspan="3"><strong>TOTAL GENERAL:</strong></td>
+                                <td id="total-general"><strong>$0</strong></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Botones de Acción -->
+            <section class="actions">
+                <button type="button" class="btn btn-success" onclick="generarPDF()">
+                    📄 Generar PDF
+                </button>
+                <button type="button" class="btn btn-info" onclick="verResumen()">
+                    📊 Ver Resumen
+                </button>
+                <button type="button" class="btn btn-warning" onclick="exportarCSV()">
+                    📋 Exportar CSV
+                </button>
+                <button type="button" class="btn btn-danger" onclick="borrarTodo()">
+                    🗑️ Borrar Todo
+                </button>
+                <button type="button" class="btn btn-success" onclick="mostrarResumenVentas()">
+                    📊 Resumen Ventas
+                </button>
+                <button type="button" class="btn btn-warning" onclick="generarPedidoProveedor()">
+                    📋 Pedido Proveedor
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="limpiarConteoUnidades()">
+                    🔄 Limpiar Conteo
+                </button>
+            </section>
+            </main>
+
+        <!-- Sección de Gestión de Clientes -->
+        <div id="seccion-clientes" class="seccion-gestion" style="display: none;">
+            <div class="seccion-header">
+                <h2>👥 Gestión de Clientes</h2>
+                <button class="btn btn-primary" onclick="mostrarModalCliente()">➕ Agregar Cliente</button>
+            </div>
+            <div class="tabla-gestion">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Domicilio</th>
+                            <th>Localidad</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-clientes">
+                        <!-- Los clientes se cargarán aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Sección de Gestión de Productos -->
+        <div id="seccion-productos" class="seccion-gestion" style="display: none;">
+            <div class="seccion-header">
+                <h2>📦 Gestión de Productos</h2>
+                <button class="btn btn-primary" onclick="mostrarModalProducto()">➕ Agregar Producto</button>
+            </div>
+            <div class="tabla-gestion">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Descripción</th>
+                            <th>Precio por Unidad</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-productos">
+                        <!-- Los productos se cargarán aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Modal de Resumen -->
+        <div id="resumen-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Resumen de Unidades Acumuladas</h3>
+                    <span class="close" onclick="cerrarModal()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div id="resumen-content">
+                        <!-- El contenido se cargará dinámicamente -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="exportarResumenPDF()">
+                        📄 Exportar PDF
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModal()">
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Cliente -->
+        <div id="cliente-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="cliente-modal-titulo">Agregar Cliente</h3>
+                    <span class="close" onclick="cerrarModalCliente()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="cliente-form">
+                        <div class="form-group">
+                            <label for="cliente-senor">Nombre:</label>
+                            <input type="text" id="cliente-senor" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cliente-domicilio">Domicilio:</label>
+                            <input type="text" id="cliente-domicilio" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cliente-localidad">Localidad:</label>
+                            <input type="text" id="cliente-localidad" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="guardarCliente()">💾 Guardar</button>
+                    <button type="button" class="btn btn-danger" onclick="eliminarCliente()" id="btn-eliminar-cliente" style="display: none;">🗑️ Eliminar</button>
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModalCliente()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Producto -->
+        <div id="producto-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="producto-modal-titulo">Agregar Producto</h3>
+                    <span class="close" onclick="cerrarModalProducto()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="producto-form">
+                        <div class="form-group">
+                            <label for="producto-descripcion">Descripción:</label>
+                            <input type="text" id="producto-descripcion" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="producto-precio">Precio por Unidad:</label>
+                            <input type="number" id="producto-precio" min="0" step="0.01" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="guardarProducto()">💾 Guardar</button>
+                    <button type="button" class="btn btn-danger" onclick="eliminarProducto()" id="btn-eliminar-producto" style="display: none;">🗑️ Eliminar</button>
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModalProducto()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

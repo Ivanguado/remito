@@ -1,0 +1,17 @@
+{
+    "name": "aplicacion-remitos",
+    "version": "1.0.0",
+    "description": "Aplicación local para generar remitos de venta",
+    "main": "index.html",
+    "scripts": {
+      "dev": "http-server -p 8080 -o",
+      "start": "http-server -p 8080"
+    },
+    "devDependencies": {
+      "http-server": "^14.1.1"
+    },
+    "keywords": ["remitos", "pdf", "local", "offline"],
+    "author": "Iván",
+    "license": "MIT"
+  }
+  
