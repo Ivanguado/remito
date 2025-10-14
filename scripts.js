@@ -551,7 +551,7 @@ function generarPDF() {
             </html>
         `;
         
-        // Escribir contenido en la ventana
+        // Escribir contenido en la ventana.
         ventanaPDF.document.write(contenidoHTML);
         ventanaPDF.document.close();
         
