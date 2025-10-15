@@ -824,7 +824,6 @@ function generarPedidoProveedor() {
                             <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Unidades por Bulto</th>
                             <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Descripción Bulto</th>
                             <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Unidades Vendidas</th>
-                            <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Bultos a Pedir</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -845,7 +844,6 @@ function generarPedidoProveedor() {
                     <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${unidadesPorBulto}</td>
                     <td style="border: 1px solid #ddd; padding: 8px;">${productoOriginal ? productoOriginal.descripcion_bulto : ''}</td>
                     <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${datos.cantidadTotal}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: bold;">${bultosAPedir}</td>
                 </tr>
             `;
             
