@@ -519,7 +519,7 @@ function generarPDF() {
                                 if (typeof html2pdf !== 'undefined') {
                                     const opciones = {
                                         margin: 10,
-                                        filename: 'Remito_${numeroRemito}.pdf',
+                                        filename: 'Remito_${numeroRemito}_${cliente}.pdf',
                                         image: { type: 'jpeg', quality: 0.98 },
                                         html2canvas: { scale: 2 },
                                         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
@@ -993,12 +993,12 @@ function mostrarResumenVentas() {
 
 
 
-/////////////////////// LUCI : ) /////////////////////////////////////////////
+/////////////////////// LUCI /////////////////////////////////////////////
 
 // Función para cargar datos directamente desde JSON
 async function cargarDatosDirectos() {
     
-    // CLIENTES
+    // CLIENTES INICIO
     clientes = [
         {
             "id": "cli_009",
@@ -1006,6 +1006,7 @@ async function cargarDatosDirectos() {
             "domicilio": "Varela y Del campo",
             "localidad": "Pehuajo"
           },
+
           {
             "id": "cli_010",
             "senor": "David Trenque Lauquen",
@@ -1140,7 +1141,7 @@ async function cargarDatosDirectos() {
           },
           {
             "id": "cli_033",
-            "senor": "Estela Supermercado",
+            "senor": "Estela Super Chambo",
             "domicilio": "",
             "localidad": "Trenque Lauquen"
           },
@@ -1914,7 +1915,8 @@ async function cargarDatosDirectos() {
         "localidad": "Trenque Lauquen"
       }
     ];
-    
+    // CLIENTES FIN
+
     //PRODUCTOS
     productos = [
         {
@@ -5103,3 +5105,5 @@ async function cargarDatosDirectos() {
           }
     ];
 }
+
+//PRODUCTOS FIN
